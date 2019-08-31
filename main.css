@@ -37,3 +37,11 @@ body {
   border-radius: 3px;
   margin-left: 30rem;
 }
+
+#x-axis {
+  stroke-width: 0.5;
+}
+
+#y-axis {
+  stroke-width: 0.5;
+}
