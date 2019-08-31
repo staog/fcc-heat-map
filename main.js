@@ -7,7 +7,10 @@ function heatmap(dataset){
   let tooltip = d3.select("#map")
                   .append("div")
                   .attr("id", "tooltip")
-                  .style("opacity", 0)
+                  .style("opacity", 0);
+  
+  let years = dataset.map(d => d.year);
+  let months = dataset.map(d => d.month);
   
   const svg = d3.select("#map")
                 .append("svg")
