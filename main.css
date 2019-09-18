@@ -14,8 +14,8 @@ body {
 
 #container {
   background-color: white;
-  width: 900px;
-  height: 600px;
+  width: 1200px;
+  height: 480px;
   display: flex;
   flex-direction: column;
   text-align: center;
