@@ -1,16 +1,22 @@
 function heatmap(dataset){
 
   let margin = 50;
-  let w = 1200;
-  let h = 480;
+  let w = 1600;
+  let h = 600;
+  
+  let barWidth = (w - 2 * margin) / (dataset.length / 12);
+  let barHeight = (h - 2 * margin) / 12;
   
   let tooltip = d3.select("#map")
                   .append("div")
                   .attr("id", "tooltip")
                   .style("opacity", 0);
   
-  let years = dataset.map(d => d.year);
-  let months = dataset.map(d => d.month);
+  const years = dataset.map(d => d.year);
+  const months = dataset.map(d => d.month);
+  
+  console.log(years)
+  console.log(months)  
   
   const svg = d3.select("#map")
                 .append("svg")
@@ -22,13 +28,13 @@ function heatmap(dataset){
      .attr("class", "text")
      .attr("transform", "rotate(-90)")
      .attr("x", -130)
-     .attr("y", 11)
+     .attr("y", 30)
      .text("Months");
   
   svg.append("text")
      .attr("class", "text")
      .attr("x", w/2.5 + 320)
-     .attr("y", h - 30)
+     .attr("y", h - 20)
      .text("Years");
   
   const xAxis = d3.axisBottom()
@@ -52,6 +58,6 @@ function heatmap(dataset){
 }
 
 d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", function(json){
-  const dataset = json.data;
+  const dataset = json.monthlyVariance;
   heatmap(dataset)
 });
