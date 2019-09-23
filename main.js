@@ -7,6 +7,19 @@ function heatmap(dataset){
   let barWidth = (w - 2 * margin) / (dataset.length / 12);
   let barHeight = (h - 2 * margin) / 12;
   
+  const div = d3.select("body")
+                .append("div");
+    
+  
+  const heading = div.append("heading");
+  
+  heading.append("h1")
+         .attr("id", "title")
+         .text("Monthly Global Land-Surface Temperature");
+  heading.append("h3")
+         .attr("id", "description")
+         .html(data.monthlyVariance[0].year + " - " + data.monthlyVariance[data.monthlyVariance.length-1].year + ": base temperature " + data.baseTemperature + "&#8451;");
+  
   let tooltip = d3.select("#map")
                   .append("div")
                   .attr("id", "tooltip")
@@ -16,13 +29,20 @@ function heatmap(dataset){
   const months = dataset.map(d => d.month);
   
   console.log(years)
-  console.log(months)  
+  console.log(months)
   
+  const xScale = d3.scaleBand()
+                   .domain(dataset.map(d => d.year))
+                   .rangeRound([0, w])
+                   .padding(margin/1000);
+               
   const svg = d3.select("#map")
                 .append("svg")
                 .attr("align", "centre")
                 .attr("width", w)
                 .attr("height", h);
+  
+  
   
   svg.append("text")
      .attr("class", "text")
