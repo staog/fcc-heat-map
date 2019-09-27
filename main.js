@@ -7,10 +7,8 @@ function heatmap(dataset){
   let barWidth = (w - 2 * margin) / (dataset.length / 12);
   let barHeight = (h - 2 * margin) / 12;
   
-  const div = d3.select("body")
-                .append("div");
+  const div = d3.select("body").append("div");
     
-  
   const heading = div.append("heading");
   
   heading.append("h1")
@@ -35,14 +33,16 @@ function heatmap(dataset){
                    .domain(dataset.map(d => d.year))
                    .rangeRound([0, w])
                    .padding(margin/1000);
+  
+  const yScale = d3.d3.scaleLinear()
+                   .domain([0, d3.max(GDP)])
+                   .range([h - margin, margin]);
                
   const svg = d3.select("#map")
                 .append("svg")
                 .attr("align", "centre")
                 .attr("width", w)
                 .attr("height", h);
-  
-  
   
   svg.append("text")
      .attr("class", "text")
