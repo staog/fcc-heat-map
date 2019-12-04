@@ -1,6 +1,6 @@
 function heatmap(dataset){
 
-  let margin = 50;
+  let margin = 60;
   let w = 1600;
   let h = 600;
   
