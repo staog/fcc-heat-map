@@ -2,7 +2,7 @@ function heatmap(dataset){
 
   let margin = 60;
   let w = 1600;
-  let h = 600;
+  let h = 800;
   
   let barWidth = (w - 2 * margin) / (dataset.length / 12);
   let barHeight = (h - 2 * margin) / 12;
@@ -13,7 +13,7 @@ function heatmap(dataset){
   
   heading.append("h1")
          .attr("id", "title")
-         .text("Monthly Global Land-Surface Temperature");
+         .text("Monthly global land-surface temperature");
   heading.append("h3")
          .attr("id", "description")
          .html(data.monthlyVariance[0].year + " - " + data.monthlyVariance[data.monthlyVariance.length-1].year + ": base temperature " + data.baseTemperature + "&#8451;");
