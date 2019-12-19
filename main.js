@@ -26,9 +26,6 @@ function heatmap(dataset){
   const years = dataset.map(d => d.year);
   const months = dataset.map(d => d.month);
   
-  console.log(years)
-  console.log(months)
-  
   const xScale = d3.scaleBand()
                    .domain(dataset.map(d => d.year))
                    .rangeRound([0, w])
