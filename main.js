@@ -62,16 +62,6 @@ function heatmap(dataset){
                   .scale(yScale)
                   .tickFormat(timeFormat);
   
-  svg.append("g")
-     .attr("id", "x-axis")
-     .attr("transform", `translate(0, ${h - margin - margin/2})`)
-     .call(xAxis);
-  
-  svg.append("g")
-     .attr("id", "y-axis")
-     .attr("transform", `translate(${margin}, ${-margin/2})`)
-     .call(yAxis)
-  
 } // end of heatmap function
 
 d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", function(json){
