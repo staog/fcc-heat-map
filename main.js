@@ -1,82 +1,103 @@
-function heatmap(dataset){
-
-  let margin = 50;
-  let w = 1600;
-  let h = 600;
+function heatmap(data){
   
-  let barWidth = (w - 2 * margin) / (dataset.length / 12);
-  let barHeight = (h - 2 * margin) / 12;
+   console.log(data);
+   const variance = data.monthlyVariance;
+   const base = data.baseTemperature;
+   const w = 1200;
+   const h = 600;
   
-  const div = d3.select("body").append("div");
-  const heading = div.append("heading");
+   const margin = {
+     top: 20,
+     right: 20,
+     bottom: 20,
+     left: 20
+   };
   
-  heading.append("h1")
-         .attr("id", "title")
-         .text("Monthly global land-surface temperature");
+   const months = [
+     "January",
+     "February",
+     "March",
+     "April",
+     "May", 
+     "June", 
+     "July", 
+     "August", 
+     "September", 
+     "October", 
+     "November",
+     "December"
+   ];
+   
+   const singleBar = w / 260;
+   const main = d3.select("#main");
+   
+   main.append("h1")
+          .attr("id", "title")
+          .text("Monthly global land-surface temperature");
   
-  heading.append("h3")
-         .attr("id", "description")
-         .html(data.monthlyVariance[0].year + " - " + data.monthlyVariance[data.monthlyVariance.length-1].year + ": base temperature " + data.baseTemperature + "&#8451;");
+   main.append("h2")
+          .attr("id", "description")
+          .html(variance[0].year + " - " + variance[variance.length - 1].year + ": Base temperature " + base + "&#8451;");
   
-  let tooltip = d3.select("#map")
-                  .append("div")
-                  .attr("id", "tooltip")
-                  .style("opacity", 0);
+   const svg = main.append("svg")
+                   .attr("align", "centre")
+                   .attr("width", w - margin.left - margin.right)
+                   .attr("height", h - margin.top - margin.bottom);
+   
+   let tooltip = main.append("div")
+                     .attr("id", "tooltip")
+                     .style("opacity", 1)
+                     .text('hello there i love you all');
   
-  const years = dataset.map(d => d.year);
-  const months = dataset.map(d => d.month);
+   const yScale = d3.scaleLinear()
+                    .domain([0, 11])
+                    .range([h - margin, margin]);
   
-  const xScale = d3.scaleBand()
-                   .domain(dataset.map(d => d.year))
-                   .rangeRound([0, w])
-                   .padding(margin/1000);
+   const xScale = d3.scaleLinear()
+                   .domain([variance[0].year, variance[variance.length - 1].year])
+                   .range([margin, w - margin]);
   
-  const yScale = d3.d3.scaleLinear()
-                   .domain([0, d3.max(GDP)])
-                   .range([h - margin, margin]);
-               
-  const svg = d3.select("#map")
-                .append("svg")
-                .attr("align", "centre")
-                .attr("width", w)
-                .attr("height", h);
+   svg.append("text")
+      .attr("class", "text")
+      .attr("transform", "rotate(-90)")
+      .attr("x", - margin.left * 10)
+      .attr("y", margin.top * 4)
+      .text("Months");
   
-  svg.append("text")
+   svg.append("text")
      .attr("class", "text")
-     .attr("transform", "rotate(-90)")
-     .attr("x", -130)
-     .attr("y", 30)
-     .text("Months");
+     .attr("x", w / 2 + 100)
+     .attr("y", h - 100)
+     .text("Years")
   
-  svg.append("text")
-     .attr("class", "text")
-     .attr("x", w/2.5 + 320)
-     .attr("y", h - 20)
-     .text("Years");
+   svg.append("text")
+     .attr("class", "signature")
+     .attr("transform", "rotate(90)")
+     .attr("x", 50)
+     .attr("y", - w + (margin.right * 5))
+     .text("Made by Milan V. Kecojević");
   
-  const xAxis = d3.axisBottom()
-                  .scale(xScale)
-                  .tickFormat(d => d);
+   const xAxis = d3.axisBottom()
+                   .scale(xScale);
   
-  const yAxis = d3.axisLeft()
-                  .scale(yScale)
-                  .tickFormat(timeFormat);
+   const yAxis = d3.axisLeft()
+                   .scale(yScale);
   
-  svg.append("g")
-     .attr("id", "x-axis")
-     .attr("transform", `translate(0, ${h - margin - margin/2})`)
-     .call(xAxis);
-  
-  svg.append("g")
-     .attr("id", "y-axis")
-     .attr("transform", `translate(${margin}, ${-margin/2})`)
-     .call(yAxis);
-  
-} 
+   svg.append("g")
+      .attr("id", "x-axis")
+      .attr("transform", "translate(0, " + (h - margin) + ")")
+      .call(xAxis);
 
-// end of heatmap function
+   svg.append("g")
+      .attr("id", "y-axis")
+      .attr("transform", "translate(" + margin + ", 0)") 
+      .call(yAxis);  
+   
+ };
+ 
+ d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", function(json){
+   const data = json;
+   console.log(data);
+   heatmap(data);
+ });
 
-d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", function(json){
-  const dataset = json.monthlyVariance;
-  heatmap(dataset)
-});
