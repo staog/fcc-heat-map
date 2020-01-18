@@ -1,6 +1,5 @@
 function heatmap(data){
   
-   console.log(data);
    const variance = data.monthlyVariance;
    const base = data.baseTemperature;
    const w = 1200;
@@ -53,6 +52,8 @@ function heatmap(data){
                     .domain([0, 11])
                     .range([h - margin, margin]);
   
+   console.log(variance[0].year, variance[variance.length - 1].year, margin.left, w - margin.right);
+  
    const xScale = d3.scaleLinear()
                    .domain([variance[0].year, variance[variance.length - 1].year])
                    .range([margin, w - margin]);
@@ -92,12 +93,17 @@ function heatmap(data){
       .attr("id", "y-axis")
       .attr("transform", "translate(" + margin + ", 0)") 
       .call(yAxis);  
+  
+   svg.selectAll('rect')
+      .data(data)
+      .enter()
+      .append('rect')
+      .attr("class", "cell");
    
  };
  
  d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", function(json){
    const data = json;
-   console.log(data);
    heatmap(data);
  });
 
