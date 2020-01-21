@@ -52,8 +52,6 @@ function heatmap(data){
                     .domain([0, 11])
                     .range([h - margin, margin]);
   
-   console.log(variance[0].year, variance[variance.length - 1].year, margin.left, w - margin.right);
-  
    const xScale = d3.scaleLinear()
                    .domain([variance[0].year, variance[variance.length - 1].year])
                    .range([margin, w - margin]);
