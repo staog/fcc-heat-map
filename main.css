@@ -4,7 +4,6 @@ body {
 }
 
 #main {
-  background-color: #fc985f;
   height: 100vh;
   width: 100vw;
   display: flex;
@@ -26,6 +25,10 @@ body {
   box-shadow: 1px 1px 5px;
   border-radius: 3px;
   margin-left: 30rem;
+}
+
+svg {
+  background-color: tomato;
 }
 
 #x-axis {
