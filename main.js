@@ -2,8 +2,9 @@ function heatmap(data){
   
    const variance = data.monthlyVariance;
    const base = data.baseTemperature;
-   const w = 1200;
-   const h = 600;
+  
+   const width = 1200;
+   const height = 600;
   
    const margin = {
      top: 20,
@@ -12,12 +13,15 @@ function heatmap(data){
      left: 20
    };
   
+   const innerWidth = width - margin.left - margin.right;
+   const innerHeight = height - margin.top - margin.bottom;
+  
    const colors = ['#313695', '#4675B4', '#74ADD1', '#ABD9E9', '#E0F2F8', '#FEFBBE', '#FCE090', '#F5AD60', '#EF6C42', '#D6322D', '#A62527'];
 
 
 	 const pickColor = temperature => {
 		 let color = '';
-		 if(temperature >= 0 && temprature < 2.8)
+		 if(temperature >= 0 && temperature < 2.8)
 			color = colors[0];
 		 else if (temperature >= 2.8 && temperature < 3.9)
 			color = colors[1];
@@ -42,7 +46,7 @@ function heatmap(data){
 		 return color;
 	 };
    
-   const singleBar = w / 260;
+   const singleBar = width / 260;
    const main = d3.select("#main");
    
    main.append("h1")
@@ -55,8 +59,8 @@ function heatmap(data){
   
    const svg = main.append("svg")
                    .attr("align", "centre")
-                   .attr("width", w - margin.left - margin.right)
-                   .attr("height", h - margin.top - margin.bottom);
+                   .attr("width", width - margin.left - margin.right)
+                   .attr("height", height - margin.top - margin.bottom);
    
    let tooltip = main.append("div")
                      .attr("id", "tooltip")
@@ -69,26 +73,26 @@ function heatmap(data){
   
    const xScale = d3.scaleLinear()
                    .domain([variance[0].year, variance[variance.length - 1].year])
-                   .range([margin.left, w - (9 * margin.right)]);
+                   .range([margin.left, width - (9 * margin.right)]);
   
    svg.append("text")
       .attr("class", "text")
       .attr("transform", "rotate(-90)")
-      .attr("x", - h/2)
+      .attr("x", - height/2)
       .attr("y", margin.left)
       .text("Months");
   
    svg.append("text")
      .attr("class", "text")
-     .attr("x", w / 2)
-     .attr("y", h - margin.bottom * 3)
+     .attr("x", width / 2)
+     .attr("y", height - margin.bottom * 3)
      .text("Years")
   
    svg.append("text")
      .attr("class", "signature")
      .attr("transform", "rotate(90)")
-     .attr("x", h/4)
-     .attr("y", - w + 3 * margin.right)
+     .attr("x", height/4)
+     .attr("y", - width + 3 * margin.right)
      .text("Made by Milan V. Kecojević");
   
    const xAxis = d3.axisBottom()
@@ -107,11 +111,14 @@ function heatmap(data){
       .attr("transform", "translate(120, " + margin.top + ")") 
       .call(yAxis);  
   
-   svg.selectAll('rect')
-      .data(data)
-      .enter()
-      .append('rect')
-      .attr("class", "cell");
+   const g = svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top}`)
+  
+   g.selectAll("rect")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("class", "cell");
    
  };
  
