@@ -3,6 +3,8 @@ function heatmap(data){
    const variance = data.monthlyVariance;
    const base = data.baseTemperature;
   
+   console.log(variance, base)
+  
    const width = 1200;
    const height = 600;
   
@@ -18,35 +20,33 @@ function heatmap(data){
   
    const colors = ['#313695', '#4675B4', '#74ADD1', '#ABD9E9', '#E0F2F8', '#FEFBBE', '#FCE090', '#F5AD60', '#EF6C42', '#D6322D', '#A62527'];
 
-
-	 const pickColor = temperature => {
-		 let color = '';
-		 if(temperature >= 0 && temperature < 2.8)
-			color = colors[0];
-		 else if (temperature >= 2.8 && temperature < 3.9)
-			color = colors[1];
-		 else if (temperature >= 3.9 && temperature < 5.0)
-			color = colors[2];
-		 else if (temperature >= 5.0 && temperature < 6.1)
-			color = colors[3];
-		 else if (temperature >= 6.1 && temperature < 7.2)
-			color = colors[4];
-		 else if (temperature >= 7.2 && temperature < 8.3)
-			color = colors[5];
-		 else if (temperature >= 8.3 && temperature < 9.5)
-			color = colors[6];
-		 else if (temperature >= 9.5 && temperature < 10.6)
-			color = colors[7];
-		 else if (temperature >= 10.6 && temperature < 11.7)
-			color = colors[8];
-		 else if (temperature >= 11.7 && temperature < 12.8)
-			color = colors[9];
-		 else 
-			color = colors[10];
-		 return color;
+   const colorSelector = temperature => {
+	let color = '';
+	if(temperature >= 0 && temperature < 2.8)
+	  color = colors[0];
+	else if (temperature >= 2.8 && temperature < 3.9)
+	  color = colors[1];
+	else if (temperature >= 3.9 && temperature < 5.0)
+	  color = colors[2];
+	else if (temperature >= 5.0 && temperature < 6.1)
+	  color = colors[3];
+	else if (temperature >= 6.1 && temperature < 7.2)
+	  color = colors[4];
+	else if (temperature >= 7.2 && temperature < 8.3)
+	  color = colors[5];
+	else if (temperature >= 8.3 && temperature < 9.5)
+	  color = colors[6];
+	else if (temperature >= 9.5 && temperature < 10.6)
+	  color = colors[7];
+	else if (temperature >= 10.6 && temperature < 11.7)
+	  color = colors[8];
+	else if (temperature >= 11.7 && temperature < 12.8)
+	  color = colors[9];
+	else 
+	  color = colors[10];
+	return color;
 	 };
-   
-   const singleBar = width / 260;
+  
    const main = d3.select("#main");
    
    main.append("h1")
