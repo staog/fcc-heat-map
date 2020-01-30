@@ -18,7 +18,19 @@ function heatmap(data){
    const innerWidth = width - margin.left - margin.right;
    const innerHeight = height - margin.top - margin.bottom;
   
-   const colors = ['#313695', '#4675B4', '#74ADD1', '#ABD9E9', '#E0F2F8', '#FEFBBE', '#FCE090', '#F5AD60', '#EF6C42', '#D6322D', '#A62527'];
+   const colors = [
+	   '#313695',
+	   '#4675B4', 
+	   '#74ADD1', 
+	   '#ABD9E9', 
+	   '#E0F2F8', 
+	   '#FEFBBE', 
+	   '#FCE090', 
+	   '#F5AD60', 
+	   '#EF6C42', 
+	   '#D6322D', 
+	   '#A62527'
+         ];
 
    const colorSelector = temperature => {
 	let color = '';
