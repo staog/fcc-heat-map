@@ -1,5 +1,7 @@
 function heatmap(data){
   
+   console.log(data);
+  
    const variance = data.monthlyVariance;
    const base = data.baseTemperature;
   
@@ -18,46 +20,7 @@ function heatmap(data){
    const innerWidth = width - margin.left - margin.right;
    const innerHeight = height - margin.top - margin.bottom;
   
-   const colors = [
-	   '#313695',
-	   '#4675B4', 
-	   '#74ADD1', 
-	   '#ABD9E9', 
-	   '#E0F2F8', 
-	   '#FEFBBE', 
-	   '#FCE090', 
-	   '#F5AD60', 
-	   '#EF6C42', 
-	   '#D6322D', 
-	   '#A62527'
-         ];
-
-   const colorSelector = temperature => {
-	let color = '';
-	if(temperature >= 0 && temperature < 2.8)
-	  color = colors[0];
-	else if (temperature >= 2.8 && temperature < 3.9)
-	  color = colors[1];
-	else if (temperature >= 3.9 && temperature < 5.0)
-	  color = colors[2];
-	else if (temperature >= 5.0 && temperature < 6.1)
-	  color = colors[3];
-	else if (temperature >= 6.1 && temperature < 7.2)
-	  color = colors[4];
-	else if (temperature >= 7.2 && temperature < 8.3)
-	  color = colors[5];
-	else if (temperature >= 8.3 && temperature < 9.5)
-	  color = colors[6];
-	else if (temperature >= 9.5 && temperature < 10.6)
-	  color = colors[7];
-	else if (temperature >= 10.6 && temperature < 11.7)
-	  color = colors[8];
-	else if (temperature >= 11.7 && temperature < 12.8)
-	  color = colors[9];
-	else 
-	  color = colors[10];
-	return color;
-	 };
+   const colors = ['#313695', '#4675B4', '#74ADD1', '#ABD9E9', '#E0F2F8', '#FEFBBE', '#FCE090', '#F5AD60', '#EF6C42', '#D6322D', '#A62527'];
   
    const main = d3.select("#main");
    
@@ -79,13 +42,17 @@ function heatmap(data){
                      .style("opacity", 1)
                      .text('hello there i love you all');
   
+   const xScale = d3.scaleLinear()
+                   .domain([variance[0].year, variance[variance.length - 1].year])
+                   .range([margin.left, width - (9 * margin.right)]);
+  
    const yScale = d3.scaleBand()
                     .domain(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'])
                     .range([margin.top, 480]);
   
-   const xScale = d3.scaleLinear()
-                   .domain([variance[0].year, variance[variance.length - 1].year])
-                   .range([margin.left, width - (9 * margin.right)]);
+   /* let colorScale = d3.scale.quantize()
+    .domain([d3.min(variance, (d) => d.variance), d3.max(variance, (d) => d.variance)])
+    .range(colors); */
   
    svg.append("text")
       .attr("class", "text")
@@ -126,11 +93,16 @@ function heatmap(data){
    const g = svg.append("g")
                 .attr("transform", `translate(${margin.left}, ${margin.top}`)
   
-   g.selectAll("rect")
-    .data(data)
+   g.selectAll('rect')
+    .data(variance)
     .enter()
-    .append("rect")
-    .attr("class", "cell");
+    .append('rect')
+    .attr('class', 'cell')
+    .attr('x', (d) => xScale(d.year))
+    .attr('y', (d) => yScale(d.month))
+    .attr('width', width / variance.length * 12)
+    .attr('height', height / 12)
+    .attr('fill', (d) => colorScale(d.variance));
    
  };
  
