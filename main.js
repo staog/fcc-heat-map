@@ -7,18 +7,19 @@ function heatmap(data){
   
    console.log(variance, base)
   
-   const width = 1200;
-   const height = 600;
+   const width = 1100;
+   const height = 480;
   
    const margin = {
      top: 20,
-     right: 20,
-     bottom: 20,
-     left: 20
+     right: 50,
+     bottom: 90,
+     left: 80
    };
   
    const innerWidth = width - margin.left - margin.right;
    const innerHeight = height - margin.top - margin.bottom;
+  
    const months = [
       'Jan',
       'Feb',
@@ -51,79 +52,41 @@ function heatmap(data){
   
    const svg = main.append("svg")
                    .attr("align", "centre")
-                   .attr("width", width - margin.left - margin.right)
-                   .attr("height", height - margin.top - margin.bottom);
+                   .attr("width", width)
+                   .attr("height", height);
+   
+   const g = svg.append("g")
+                .attr("transform", `translate(${margin.left}, ${margin.top})`);
    
    let tooltip = main.append("div")
                      .attr("id", "tooltip")
                      .style("opacity", 1)
-                     .text('hello there i love you all');
+                     .text('Hello there');
   
    const xScale = d3.scaleLinear()
-                   .domain([varianceMin, varianceMax])
-                   .range([margin.left, width - (9 * margin.right)]);
+                    .domain([varianceMin, varianceMax])
+                    .range(margin.right, innerWidth);
   
    const yScale = d3.scaleLinear()
                     .domain([1, 13])
-                    .range([margin.left, 480]);
+                    .range(margin.top, innerHeight);
   
-   const colorScale = d3.scaleQuantize()
-                      .domain([varianceMin, varianceMax])
-                      .range(colors);
-  
-   svg.append("text")
-      .attr("class", "text")
-      .attr("transform", "rotate(-90)")
-      .attr("x", - height/2)
-      .attr("y", margin.left)
-      .text("Months");
-  
-   svg.append("text")
-     .attr("class", "text")
-     .attr("x", width / 2)
-     .attr("y", height - margin.bottom * 3)
-     .text("Years")
-  
-   svg.append("text")
-     .attr("class", "signature")
-     .attr("transform", "rotate(90)")
-     .attr("x", height/4)
-     .attr("y", - width + 3 * margin.right)
-     .text("Made by Milan V. Kecojević");
-  
-   const xAxis = d3.axisBottom()
-                   .scale(xScale)
-                   .tickFormat(d => d);
-  
-   const yAxis = d3.axisLeft(yScale);
-  
-   svg.append("g")
-      .attr("id", "x-axis")
-      .attr("transform", "translate(100, 500)")
-      .call(xAxis);
-
-   svg.append("g")
-      .attr("id", "y-axis")
-      .attr("transform", "translate(120, " + margin.top + ")") 
-      .call(yAxis);  
-  
-   const g = svg.append("g")
-                .attr("transform", `translate(${margin.left}, ${margin.top}`)
-  
-   g.selectAll('rect')
+   g.selectAll("rect")
     .data(variance)
     .enter()
-    .append('rect')
-    .attr('class', 'cell')
-    .attr('x', (d) => xScale(d.year))
-    .attr('y', (d) => yScale(d.month))
-    .attr('width', width / variance.length * 12)
-    .attr('height', height / 12)
-    .attr('fill', (d) => colorScale(d.variance));
-   
- };
+    .append("rect")
+    .attr("class", "cell")
+    .attr("x", d => xScale(d.year))
+    .attr("y", d => yScale(d.month))
+    .attr("width", width / variance.length * 12)
+    .attr("height", height / 12);
+  
+  
+  };
  
  d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", function(json){
    const data = json;
    heatmap(data);
  });
+
+
