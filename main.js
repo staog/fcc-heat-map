@@ -71,6 +71,10 @@ function heatmap(data){
                     .domain([1, 13])
                     .range(margin.top, innerHeight);
   
+   let colorScale = d3.scaleQuantize()
+    .domain([d3.min(variance, (d) => d.variance), d3.max(variance, (d) => d.variance)])
+    .range(colors);
+  
    g.selectAll("rect")
     .data(variance)
     .enter()
@@ -79,8 +83,8 @@ function heatmap(data){
     .attr("x", d => xScale(d.year))
     .attr("y", d => yScale(d.month))
     .attr("width", width / variance.length * 12)
-    .attr("height", height / 12);
-  
+    .attr("height", height / 12)
+    .attr('fill', (d) => colorScale(d.variance));
   
   };
  
