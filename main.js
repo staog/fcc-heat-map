@@ -18,21 +18,6 @@ function heatmap(data){
    const innerWidth = width - margin.left - margin.right;
    const innerHeight = height - margin.top - margin.bottom;
   
-   const months = [
-      'Jan',
-      'Feb',
-      'Mar',
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec'
-   ];
-  
    const colors = ['#313695', '#4675B4', '#74ADD1', '#ABD9E9', '#E0F2F8', '#FEFBBE', '#FCE090', '#F5AD60', '#EF6C42', '#D6322D', '#A62527'];
   
    const varianceMin = d3.min(tempVariance, d => d.year);
@@ -65,9 +50,25 @@ function heatmap(data){
                     .domain([varianceMin, varianceMax])
                     .range(margin.right, innerWidth);
   
-   const yScale = d3.scaleLinear()
-                    .domain([1, 13])
+   console.log(xScale.domain()); // 1753, 2015
+  
+   const yScale = d3.scaleBand()
+                    .domain( ['Jan',
+                              'Feb',
+                              'Mar',
+                              'Apr',
+                              'May',
+                              'Jun',
+                              'Jul',
+                              'Aug',
+                              'Sep',
+                              'Oct',
+                              'Nov',
+                              'Dec']
+                           )
                     .range(margin.top, innerHeight);
+  
+   console.log(yScale.domain()); // 1, 13
   
    let colorScale = d3.scaleQuantize()
     .domain([d3.min(tempVariance, (d) => d.variance), d3.max(tempVariance, (d) => d.variance)])
@@ -81,7 +82,7 @@ function heatmap(data){
   
    svg.append("g")
       .attr("id", "x-axis")
-      .attr("transform", "translate(100, 500)")
+      .attr("transform", "translate(100, 300)")
       .call(xAxis);
 
    svg.append("g")
@@ -106,5 +107,3 @@ function heatmap(data){
    const data = json;
    heatmap(data);
  });
-
-
