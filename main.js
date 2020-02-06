@@ -17,6 +17,8 @@ function heatmap(data){
   
    const innerWidth = width - margin.left - margin.right;
    const innerHeight = height - margin.top - margin.bottom;
+   
+   console.log(innerWidth, innerHeight);
   
    const colors = ['#313695', '#4675B4', '#74ADD1', '#ABD9E9', '#E0F2F8', '#FEFBBE', '#FCE090', '#F5AD60', '#EF6C42', '#D6322D', '#A62527'];
   
@@ -48,9 +50,10 @@ function heatmap(data){
   
    const xScale = d3.scaleLinear()
                     .domain([varianceMin, varianceMax])
-                    .range(margin.right, innerWidth);
+                    .range([margin.right, innerWidth]);
   
    console.log(xScale.domain()); // 1753, 2015
+   console.log(xScale.range());
   
    const yScale = d3.scaleBand()
                     .domain( ['Jan',
@@ -66,9 +69,9 @@ function heatmap(data){
                               'Nov',
                               'Dec']
                            )
-                    .range(margin.top, innerHeight);
+                    .range([margin.top, innerHeight]);
   
-   console.log(yScale.domain()); // 1, 13
+   console.log(yScale.domain()); // 12 Months
   
    let colorScale = d3.scaleQuantize()
     .domain([d3.min(tempVariance, (d) => d.variance), d3.max(tempVariance, (d) => d.variance)])
@@ -107,3 +110,5 @@ function heatmap(data){
    const data = json;
    heatmap(data);
  });
+
+
