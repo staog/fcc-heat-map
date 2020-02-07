@@ -31,7 +31,7 @@ svg {
   width: 100px;
   height: 60px;
   font-size: 11px;
-  background-color: #aaa;
+  background-color: #ccc;
   box-shadow: 1px 1px 5px;
   border-radius: 3px;
   margin-left: 30rem;
@@ -43,4 +43,8 @@ svg {
 
 #y-axis {
   stroke-width: 0.1;
+}
+
+.text {
+  font-size: 0.9em;
 }
