@@ -1,7 +1,5 @@
 function heatmap(data){
   
-   console.log(data);
-  
    const tempVariance = data.monthlyVariance;
    const base = data.baseTemperature;
   
@@ -17,8 +15,6 @@ function heatmap(data){
   
    const innerWidth = width - margin.left - margin.right;
    const innerHeight = height - margin.top - margin.bottom;
-   
-   console.log(innerWidth, innerHeight);
   
    const colors = ['#313695', '#4675B4', '#74ADD1', '#ABD9E9', '#E0F2F8', '#FEFBBE', '#FCE090', '#F5AD60', '#EF6C42', '#D6322D', '#A62527'];
   
@@ -45,15 +41,12 @@ function heatmap(data){
    
    let tooltip = main.append("div")
                      .attr("id", "tooltip")
-                     .style("opacity", 0)
+                     .style("opacity", 1)
                      .text('Hello there');
   
    const xScale = d3.scaleLinear()
                     .domain([varianceMin, varianceMax])
                     .range([margin.right, innerWidth]);
-  
-   console.log(xScale.domain()); // 1753, 2015
-   console.log(xScale.range()); // 50, 970
   
    const yScale = d3.scaleBand()
                     .domain( ['Jan',
@@ -70,9 +63,6 @@ function heatmap(data){
                               'Dec']
                            )
                     .range([margin.top, innerHeight]);
-  
-   console.log(yScale.domain()); // 12 Months
-   console.log(yScale.range()); // 20, 370
   
    let colorScale = d3.scaleQuantize()
     .domain([d3.min(tempVariance, (d) => d.variance), d3.max(tempVariance, (d) => d.variance)])
@@ -99,21 +89,21 @@ function heatmap(data){
    g.append("text")
      .attr("class", "text")
      .attr("transform", "rotate(-90)")
-     .attr("x", -innerHeight/2)
-     .attr("y", -margin.top)
+     .attr("x", - innerHeight / 2)
+     .attr("y", - margin.top)
      .text("Month");
   
    g.append("text")
      .attr("class", "text")
-     .attr("x", innerWidth/3)
+     .attr("x", innerWidth / 3)
      .attr("y", innerHeight + margin.right)
      .text("Year");
   
    g.append("text")
      .attr("class", "text")
      .attr("transform", "rotate(90)")
-     .attr("x", innerHeight/5)
-     .attr("y", -innerWidth - margin.top)
+     .attr("x", innerHeight / 5)
+     .attr("y", - innerWidth - margin.top)
      .text("Made by Milan V. Kecojević");
   
    g.selectAll("rect")
@@ -123,8 +113,8 @@ function heatmap(data){
     .attr("class", "cell")
     .attr("x", d => xScale(d.year))
     .attr("y", d => yScale(d.month))
-    .attr("width", innerWidth/tempVariance.length * 12)
-    .attr("height", innerHeight/12)
+    .attr("width", innerWidth / tempVariance.length * 12)
+    .attr("height", innerHeight / 12)
     .attr('fill', d => colorScale(d.variance));
   
   };
