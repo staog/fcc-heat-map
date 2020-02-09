@@ -54,7 +54,7 @@ function heatmap(data){
                    .attr("height", height);
    
    const g = svg.append("g")
-                .attr("transform", `translate(${margin.left}, ${margin.top})`);
+                .attr("transform", `translate(${margin.right + margin.top}, ${margin.top})`);
    
    let tooltip = main.append("div")
                      .attr("id", "tooltip")
@@ -80,14 +80,14 @@ function heatmap(data){
                    .tickSize(0)
                    .scale(yScale);
   
-   svg.append("g")
+   g.append("g")
       .attr("id", "x-axis")
-      .attr("transform", `translate(${margin.left}, ${innerHeight})`)
+      .attr("transform", `translate(0, ${innerHeight - margin.top})`)
       .call(xAxis);
 
-   svg.append("g")
+   g.append("g")
       .attr("id", "y-axis")
-      .attr("transform", `translate(${margin.left + margin.right}, 0)`) 
+      .attr("transform", `translate(${margin.right}, ${-margin.top})`) 
       .call(yAxis); 
   
    g.append("text")
@@ -136,17 +136,19 @@ function heatmap(data){
               .style("visibility", "hidden");
      });
   
-   const legend = main.append("div")
-                      .selectAll("rect")
-                      .attr("id", "legend")
-                      .data(colors)
-                      .enter()
-                      .append("rect")
-                      .attr("x", 100)
-                      .attr("y", 200)
-                      .attr("width", 280)
-                      .attr("height", 28)
-                      .style("fill", d => d);
+   const tempMin = (base + varianceMin).toFixed(2);
+   const tempMax = (base + varianceMax).toFixed(2);
+  
+   const cellWidth = 30;
+   const legendWidth = cellWidth * colors.length;
+   const legendHeight = 25;
+  
+   const legendScale = d3.scaleLinear()
+                         .domain([tempMin, tempMax])
+                         .range([9, legendWidth]);
+  
+   const legendXAxis = d3.axisBottom(legendScale);
+  
 };
  
  d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", function(json){
