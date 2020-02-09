@@ -140,15 +140,40 @@ function heatmap(data){
    const tempMax = (base + varianceMax).toFixed(2);
   
    const cellWidth = 30;
-   const legendWidth = cellWidth * colors.length;
+   const legendWidth = 330;
    const legendHeight = 25;
   
-   const legendScale = d3.scaleLinear()
-                         .domain([tempMin, tempMax])
-                         .range([9, legendWidth]);
+   const legendValueScale =  d3.scaleLinear()
+                               .domain([tempMin, tempMax])
+                               .range([0, legendWidth]);
   
-   const legendXAxis = d3.axisBottom(legendScale);
+   const legendColorScale = d3.scaleQuantize()
+                              .domain([tempMin, tempMax])
+                              .range(colors);
+   
+   const cellColors = d3.range(tempMin, tempMax, (tempMax - tempMin)/colors.length);
   
+   const legendXAxis = d3.axisBottom()
+                         .scale(legendValueScale);
+  
+   const legend = svg.append("g")
+                     .attr("id", "legend")
+                     .attr("transform", `translate(${innerWidth/1.8}, ${innerHeight + margin.right})`)
+   
+   legend.selectAll("rect")
+         .data(cellColors)
+         .enter()
+         .append("rect")
+         .attr("x", d => legendValueScale(d))
+         .attr("width", cellWidth)
+         .attr("height", legendHeight)
+         .style("fill", d => legendColorScale(d));
+  
+   legend.append("g")
+         .attr("id", "legendXAxis")
+         .attr("transform", `translate(0, ${margin.top})`)
+         .call(legendXAxis);
+    
 };
  
  d3.json("https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json", function(json){
