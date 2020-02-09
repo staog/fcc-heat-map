@@ -40,7 +40,7 @@ You can use HTML, JavaScript, CSS, and the D3 svg-based visualization library. R
 
 * User Story #16: I can mouse over an area and see a tooltip with a corresponding id="tooltip" which displays more information about the area.
 
-* User Story #16: My tooltip should have a data-year property that corresponds to the data-year of the active area.
+* User Story #17: My tooltip should have a data-year property that corresponds to the data-year of the active area.
 
 Here is the dataset you will need to complete this project: https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json
 
