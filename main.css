@@ -44,11 +44,15 @@ svg {
 }
 
 #x-axis {
-  stroke-width: 0.3;
+  stroke-width: 0.5;
 }
 
 #y-axis {
-  stroke-width: 0.3;
+  stroke-width: 0.5;
+}
+
+#legendXAxis {
+  stroke-width: 0.2;
 }
 
 .text {
