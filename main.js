@@ -31,7 +31,19 @@ function heatmap(data){
     'December'
   ];
   
-   const colors = ['#313695', '#4675B4', '#74ADD1', '#ABD9E9', '#E0F2F8', '#FEFBBE', '#FCE090', '#F5AD60', '#EF6C42', '#D6322D', '#A62527'];
+   const colors = [
+     '#313695',
+     '#4675B4',
+     '#74ADD1',
+     '#ABD9E9',
+     '#E0F2F8',
+     '#FEFBBE',
+     '#FCE090',
+     '#F5AD60',
+     '#EF6C42',
+     '#D6322D',
+     '#A62527'
+   ];
   
    const startYear = d3.min(tempVariance, d => d.year);
    const endYear = d3.max(tempVariance, d => d.year);
@@ -171,7 +183,7 @@ function heatmap(data){
   
    legend.append("g")
          .attr("id", "legendXAxis")
-         .attr("transform", `translate(0, ${margin.top})`)
+         .attr("transform", `translate(0, ${margin.top * 1.25})`)
          .call(legendXAxis);
     
 };
