@@ -54,9 +54,8 @@ function heatmap(data){
    
    main.append("h1")
           .attr("id", "title")
-          .text("Monthly global land-surface temperature");
-  
-   main.append("h2")
+          .text("Monthly global land-surface temperature")
+          .append("h2")
           .attr("id", "description")
           .html(tempVariance[0].year + " - " + tempVariance[tempVariance.length - 1].year + ": Base temperature " + base + "&#8451;");
   
@@ -111,8 +110,8 @@ function heatmap(data){
   
    g.append("text")
      .attr("class", "text")
-     .attr("x", innerWidth / 3)
-     .attr("y", innerHeight + margin.right)
+     .attr("x", innerWidth / 4)
+     .attr("y", innerHeight + margin.top)
      .text("Year");
   
    g.append("text")
@@ -170,7 +169,7 @@ function heatmap(data){
   
    const legend = svg.append("g")
                      .attr("id", "legend")
-                     .attr("transform", `translate(${innerWidth/1.8}, ${innerHeight + margin.right})`)
+                     .attr("transform", `translate(${innerWidth/2.3}, ${innerHeight + margin.right})`)
    
    legend.selectAll("rect")
          .data(cellColors)
