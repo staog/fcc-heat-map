@@ -16,6 +16,10 @@ body {
   flex-direction: column;
 }
 
+#title {
+  text-align: center;
+}
+
 svg {
   background-color: white;
   border-radius: 5px;
