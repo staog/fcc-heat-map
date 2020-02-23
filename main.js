@@ -55,7 +55,8 @@ function heatmap(data){
    main.append("h1")
           .attr("id", "title")
           .text("Monthly global land-surface temperature")
-          .append("h2")
+          
+   main.append("h2")
           .attr("id", "description")
           .html(tempVariance[0].year + " - " + tempVariance[tempVariance.length - 1].year + ": Base temperature " + base + "&#8451;");
   
